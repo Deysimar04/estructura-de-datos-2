@@ -43,7 +43,7 @@ class Laberinto:
         print("No hay salida en el laberinto.")
         return False
 
-# Definir el laberinto
+
 laberinto_matriz = [
     ['S', 'O', 'X', 'X','O'],
     ['X', 'O', 'O', 'X','O'],
