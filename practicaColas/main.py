@@ -6,17 +6,17 @@ from practicaColas.functions import add_queue
 
 app = FastAPI()
 
-# Clase para representar un nodo en la cola
+
 class Node:
     def __init__(self, data: Any):
         self.data: Any = data
-        self.next: Optional["Node"] = None  # El siguiente nodo puede ser otro Node o None
+        self.next: Optional["Node"] = None  
 
-# Clase para implementar una cola basada en nodos
+
 class Queue:
     def __init__(self):
-        self.head: Optional[Node] = None  # Nodo inicial de la cola
-        self.tail: Optional[Node] = None  # Nodo final de la cola
+        self.head: Optional[Node] = None  
+        self.tail: Optional[Node] = None  
 
     def enqueue(self, item: Any) -> None:
         """Agrega un elemento al final de la cola."""
@@ -37,10 +37,10 @@ class Queue:
             self.tail = None
         return item
 
-# Clase para manejar los turnos de un tipo específico
+
 class TicketController:
     def __init__(self):
-        self.queue: Queue = Queue()  # Cada controlador tiene su propia cola
+        self.queue: Queue = Queue()  
 
     def add_ticket(self, ticket: Any) -> None:
         """Agrega un ticket a la cola."""
@@ -50,7 +50,7 @@ class TicketController:
         """Obtiene el siguiente ticket en la cola."""
         return self.queue.dequeue()
 
-# Diccionario para manejar los diferentes tipos de atención
+
 ticketTypes: Dict[str, TicketController] = {
     "dudas": TicketController(),
     "asesor": TicketController(),
@@ -58,7 +58,7 @@ ticketTypes: Dict[str, TicketController] = {
     "otros": TicketController()
 }
 
-# Endpoint para crear un turno
+
 @app.post("/ticketCreate")
 def crear_turno(
     name: str,
@@ -90,7 +90,7 @@ def crear_turno(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Endpoint para obtener el siguiente turno
+
 @app.get("/ticketNext")
 def obtener_siguiente_turno(type: str) -> Dict[str, Any]:
     """
@@ -105,7 +105,7 @@ def obtener_siguiente_turno(type: str) -> Dict[str, Any]:
     else:
         return {"mensaje": "No hay turnos en la cola"}
 
-# Endpoint para listar los turnos en cola por el tipo de turno
+
 @app.get("/ticketList")
 def listar_turnos_cola(type: str) -> Dict[str, Any]:
     """
@@ -121,7 +121,7 @@ def listar_turnos_cola(type: str) -> Dict[str, Any]:
     else:
         return {"mensaje": "Tipo de atención no válido"}
 
-# Endpoint raíz
+
 @app.get("/")
 def read_root() -> Dict[str, str]:
     """
@@ -129,7 +129,7 @@ def read_root() -> Dict[str, str]:
     """
     return {"Hello": "World"}
 
-# Endpoint para leer un ítem específico
+
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Optional[str] = None) -> Dict[str, Union[int, Optional[str]]]:
     """
